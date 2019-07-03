@@ -1,0 +1,64 @@
+buildscript {
+
+    repositories {
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        mavenCentral()
+    }
+
+    dependencies {
+//        classpath 'com.bmuschko:gradle-tomcat-plugin:2.2.5'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:5.1.0'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'idea'
+    id 'war'
+//    id "com.bmuschko.tomcat" version "2.5"
+    id 'com.github.johnrengelman.shadow' version '5.1.0'
+}
+
+group 'pers.spring.demo'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    mavenLocal()
+    jcenter()
+    mavenCentral()
+}
+
+
+dependencies {
+    implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '8.0.47'
+    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
+    implementation 'org.springframework:spring-webmvc:3.2.18.RELEASE'
+    testCompile 'junit:junit:4.12'
+}
+
+shadowJar {
+    mergeServiceFiles()
+}
+
+//
+//dependencies {
+//    def tomcatVersion = '9.0.1'
+//
+//    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+//            "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6",
+//            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+//}
+//
+//tomcat {
+//    httpPort = 8090
+//
+//    httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
+//    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
+//}
+
+
+
