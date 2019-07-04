@@ -2,7 +2,6 @@ package pers.mvc.fatjar;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
-import pers.mvc.fatjar.config.tomcat.EmbededContextConfig;
 import pers.mvc.fatjar.config.tomcat.TomcatUtil;
 import pers.mvc.fatjar.config.tomcat.WebXmlMountListener;
 
@@ -26,16 +25,15 @@ public class Bootstrap {
 
         tomcat.setPort(PORT);
         tomcat.setHostname(hostName);
-
 //        Context context = tomcat.addWebapp(tomcatBaseDir, contextDocBase);
-        Context context = tomcat.addWebapp(tomcat.getHost(), contextPath, contextDocBase, new EmbededContextConfig());
+        Context context = tomcat.addWebapp(tomcat.getHost(), contextPath, contextDocBase);
 
         ClassLoader classLoader = Bootstrap.class.getClassLoader();
         context.setParentClassLoader(classLoader);
 
         // context load WEB-INF/web.xml from classpath
         context.addLifecycleListener(new WebXmlMountListener());
-
+        context.setConfigFile(null);
         tomcat.start();
         tomcat.getServer().await();
 
