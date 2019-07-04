@@ -30,6 +30,7 @@ public class Bootstrap {
         tomcat.start();
         tomcat.getServer().await();
     }
+
     // based on AbstractEmbeddedServletContainerFactory
     private static String createTempDir() {
         try {

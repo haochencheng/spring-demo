@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- configuration file for LogBack (slf4J implementation)
+See here for more details: http://gordondickens.com/wordpress/2013/03/27/sawing-through-the-java-loggers/ -->
+<configuration scan="true" scanPeriod="30 seconds">
+
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+    <!-- To enable JMX Management -->
+    <jmxConfigurator/>
+    <appender name="webLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/tmp/log/rent/mvcFastJarLog.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%-5level %d{yyyy-MM-dd HH:mm:ss.SSS} - %logger{0} traceId:%X{mdc_trace_id} userId:%X{mdc_user_id} -
+                %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="webLogError" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/tmp/log/rent/mvcFastJarLogError.log</file>
+        <!-- 过滤日志 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        　　　　　
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            　　　　　　　　
+            <fileNamePattern>/tmp/log/rent/webLogError.%i.log.zip</fileNamePattern>
+            　　　　　　　　
+            <minIndex>1</minIndex>
+            　　　　　　　　
+            <maxIndex>3</maxIndex>
+            　　　　　
+        </rollingPolicy>
+
+        　　　　　
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            　　　　　　　　
+            <maxFileSize>100MB</maxFileSize>
+            　　　　　
+        </triggeringPolicy>
+        　　　　　
+        <encoder>
+            　　　　　　　　
+            <pattern>%-5level %d{yyyy-MM-dd HH:mm:ss} - %logger{0} traceId:%X{mdc_trace_id} userId:%X{mdc_user_id} -
+                %msg%n
+            </pattern>
+            　　　　　
+        </encoder>
+        　　
+    </appender>
+
+    <!--控制台输出 -->
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%-5level %d{yyyy-MM-dd HH:mm:ss} - %logger{0} traceId:%X{mdc_trace_id} userId:%X{mdc_user_id} -
+                %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+
+    <!--<logger name="org.hibernate" level="debug"/> -->
+    <!-- Uncomment and add your logger here:
+     <logger name="org.springframework.samples.service.service" level="debug"/> -->
+    <logger name="org.springframework" level="debug"/>
+    <logger name="org.apache" level="error"/>
+    <root level="debug">
+        <appender-ref ref="webLog"/>
+        <appender-ref ref="webLogError"/>
+        <appender-ref ref="stdout"/>
+    </root>
+</configuration>

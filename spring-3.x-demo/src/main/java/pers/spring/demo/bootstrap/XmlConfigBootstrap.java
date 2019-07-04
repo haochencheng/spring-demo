@@ -25,8 +25,6 @@ public class XmlConfigBootstrap {
 //        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext();
 ////         设置 XML 配置文件的位置
 //        context.setConfigLocation("classpath:context.xml");
-
-
         FileSystemXmlApplicationContext context=new FileSystemXmlApplicationContext();
         //如果路径不存在报错 java.io.FileNotFoundException
         context.setConfigLocation("file:/Users/haochencheng/Workspace/java/demo/spring-demo/src/main/resources/context.txt");
