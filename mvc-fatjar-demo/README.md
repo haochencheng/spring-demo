@@ -1,4 +1,5 @@
 ### springMvc使用内嵌tomcat
+使用web.xml配置，适用于 springMvc项目无改动切换为jar包启动
 ```text
 WebXmlMountListener实现org.apache.catalina.LifecycleListener接口监听
 LifecycleEvent -> Lifecycle.BEFORE_START_EVENT 
@@ -12,8 +13,8 @@ LifecycleEvent -> Lifecycle.BEFORE_START_EVENT
 
 tomcat -> webMvc 加载顺序 
  \_ ServletContainerInitializer.onStartup() -> WebApplicationInitializer
-   \_  ServletContextListener
-     \_ loadServlet()
+   \_  ServletContextListener -> ContextLoaderListener
+     \_ loadServlet() -> DispatcherServlet
      
      
 #####   ServletContainerInitializers (SCIs)
@@ -30,6 +31,7 @@ ServletContainerInitializer 初始化 -> WebApplicationInitializer
 spring | SpringServletContainerInitializer implements ServletContainerInitializer
  \_ onStartup(Set<Class<?>> webAppInitializerClasses, ServletContext servletContext)
     \_ WebApplicationInitializer.onStartup(ServletContext servletContext)
+       \_ 加载WebApplicationInitializer所有实现类
 
 ServletContextListener 加载 -> ContextLoader
 spring | ContextLoaderListener extends ContextLoader implements ServletContextListener
