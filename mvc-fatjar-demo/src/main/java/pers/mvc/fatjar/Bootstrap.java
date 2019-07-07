@@ -12,7 +12,7 @@ import pers.mvc.fatjar.config.tomcat.WebXmlMountListener;
  **/
 public class Bootstrap {
 
-    private static final int PORT = 6789;
+    private static final int PORT = 25184;
 
     public static void main(String[] args)throws Exception  {
         String hostName = "localhost";
@@ -25,7 +25,6 @@ public class Bootstrap {
 
         tomcat.setPort(PORT);
         tomcat.setHostname(hostName);
-//        Context context = tomcat.addWebapp(tomcatBaseDir, contextDocBase);
         Context context = tomcat.addWebapp(tomcat.getHost(), contextPath, contextDocBase);
 
         ClassLoader classLoader = Bootstrap.class.getClassLoader();

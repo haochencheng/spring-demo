@@ -1,6 +1,7 @@
 package pers.mvc.fatjar.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,7 +15,7 @@ public class HelloWordController {
 
     @GetMapping("/hello")
     @ResponseBody
-    public String hello(){
+    public String hello() {
         return "hello world";
     }
 

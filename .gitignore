@@ -9,3 +9,11 @@ build
 .gradle
 *.class
 target/
+.idae
+.vscode
+.sts4-cache
+.settings
+.classpath
+.project
+.iml
+
