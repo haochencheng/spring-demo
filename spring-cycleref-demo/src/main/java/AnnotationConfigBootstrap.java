@@ -14,11 +14,14 @@ public class AnnotationConfigBootstrap {
         AnnotationConfigApplicationContext context=new AnnotationConfigApplicationContext();
         context.register(SpringSingletonBeanConfig.class);
         context.refresh();
-        BeanA bean = context.getBean(BeanA.class);
-        bean.say();
+        BeanA beanA = context.getBean(BeanA.class);
+        beanA.say();
+        BeanB beanB = beanA.getBeanB();
+        beanB.say();
         BeanB beanb = context.getBean(BeanB.class);
-        beanb.say();
-        beanb.getBeanA().say();
+        System.out.println(beanB==beanb);
+        beanB.say();
+        beanB.getBeanA().say();
         context.destroy();
     }
 

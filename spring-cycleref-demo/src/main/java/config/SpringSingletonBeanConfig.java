@@ -29,7 +29,9 @@ public class SpringSingletonBeanConfig implements ApplicationContextAware {
 
     @Bean
     public BeanB beanB(){
-        return new BeanB();
+        BeanB beanB = new BeanB();
+        beanB.setBeanA(new BeanA());
+        return beanB;
     }
 
     @Override
@@ -38,6 +40,5 @@ public class SpringSingletonBeanConfig implements ApplicationContextAware {
         BeanB beanB = applicationContext.getBean(BeanB.class);
         beanA.setBeanB(beanB);
         beanB.setBeanA(beanA);
-
     }
 }
