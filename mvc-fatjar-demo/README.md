@@ -86,3 +86,64 @@ tomcat | StandardWrapper.loadServlet()
                        
 
 ```
+
+
+### tomcat
+- server 
+
+
+    A Server element represents the entire Catalina
+    servlet container.  Its attributes represent the characteristics of
+    the servlet container as a whole.
+    A Server may contain one or more Services, and the top level set of naming
+    resources.
+
+一个server元素代表找整个catalina servlet容器。它的属性代表整个servlet容器的特征。
+一个Server可以包含一个或多个Services，以及顶级命名资源集。
+
+- service
+
+    
+    A <strong>Service</strong> is a group of one or more
+    <strong>Connectors</strong> that share a single <strong>Container</strong>
+    to process their incoming requests.  This arrangement allows, for example,
+    a non-SSL and SSL connector to share the same population of web apps.
+    <p>
+    A given JVM can contain any number of Service instances; however, they are
+    completely independent of each other and share only the basic JVM facilities
+    and classes on the system class path.
+    
+一个Service是由一个或多个Connectors组成的组，它们共享一个单例Container容器来处理进入的请求。
+
+
+
+
+
+
+
+
+
+### classLoader
+
+#####   OSGI
+
+    java 程序中基本有一个共识：OSGI对类加载器的使用时值得学习的，弄懂了OSGI的实现，就可以算是掌握了类加载器的精髓。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

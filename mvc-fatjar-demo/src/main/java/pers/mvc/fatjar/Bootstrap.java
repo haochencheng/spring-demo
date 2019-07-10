@@ -32,7 +32,6 @@ public class Bootstrap {
 
         // context load WEB-INF/web.xml from classpath
         context.addLifecycleListener(new WebXmlMountListener());
-        context.setConfigFile(null);
         tomcat.start();
         tomcat.getServer().await();
 
