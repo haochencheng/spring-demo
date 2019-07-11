@@ -88,19 +88,25 @@ public class CustomBootstrap {
                     Arrays.toString(fields);
                     CustomerBean customerBean = method.getDeclaredAnnotation(CustomerBean.class);
                     if (Objects.nonNull(customerBean)){
-                        //配置 bean 解决循环依赖
-                        getBean(customerBean.name(),method,aClass);
+                        //配置 bean 解决循环依赖 直接加载无法解决 循环依赖问题 ，加载可以成功 但是 不是一个引用
+//                        getBean(customerBean.name(),method,aClass);
                     }
                 }
             }
-
-
         }
-
     }
 
     public static void getBean(String beanName,Method method,Class cl) throws InstantiationException, IllegalAccessException, InvocationTargetException {
             addSingletonFactory(beanName,method,cl);
+    }
+
+    protected static void addSingletonFactory(String beanName,Method method,Class cl) throws IllegalAccessException, InstantiationException, InvocationTargetException {
+        synchronized (singletonObjects) {
+            if (!singletonObjects.containsKey(beanName)) {
+                Object invoke = method.invoke(cl.newInstance(), null);
+                singletonObjects.putIfAbsent(beanName,invoke);
+            }
+        }
     }
 
     public static void source() {
@@ -121,13 +127,6 @@ public class CustomBootstrap {
         beanB.say();
     }
 
-    protected static void addSingletonFactory(String beanName,Method method,Class cl) throws IllegalAccessException, InstantiationException, InvocationTargetException {
-        synchronized (singletonObjects) {
-            if (!singletonObjects.containsKey(beanName)) {
-                Object invoke = method.invoke(cl.newInstance(), null);
-                singletonObjects.putIfAbsent(beanName,invoke);
-            }
-        }
-    }
+
 
 }
