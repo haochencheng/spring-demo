@@ -1,6 +1,5 @@
 import bean.BeanA;
 import bean.BeanB;
-import config.SpringSingletonBeanConfig;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
@@ -12,7 +11,8 @@ public class AnnotationConfigBootstrap {
 
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context=new AnnotationConfigApplicationContext();
-        context.register(SpringSingletonBeanConfig.class);
+//        context.register(SpringSingletonBeanConfig.class);
+        context.scan("config");
         context.refresh();
         BeanA beanA = context.getBean(BeanA.class);
         beanA.say();

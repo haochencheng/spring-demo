@@ -1,5 +1,7 @@
 package bean;
 
+import java.util.Objects;
+
 /**
  * @description:
  * @author: haochencheng
@@ -24,7 +26,7 @@ public class BeanB {
     @Override
     public String toString() {
         return "BeanB{" +
-                "beanA.name=" + beanA.getName() +
+                "beanA.name=" +
                 '}';
     }
 }

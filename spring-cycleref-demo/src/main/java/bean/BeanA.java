@@ -33,11 +33,4 @@ public class BeanA {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "BeanA{" +
-                "name='" + name + '\'' +
-                ", beanB=" + beanB +
-                '}';
-    }
 }
