@@ -7,6 +7,8 @@ import bean.BeanB;
 import java.io.File;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -25,12 +27,15 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CustomBootstrap {
 
     private static final Map<String, Object> singletonObjects = new ConcurrentHashMap<>();
-    private static final Map<String, Object> earlySingletonObjects = new HashMap<>();
-
-    private static final Set<String> registeredSingletons = new LinkedHashSet<>(64);
 
     public static void main(String[] args) throws Exception {
+        //初始化 容器
         init(CustomBootstrap.class);
+        BeanA beanA = (BeanA)singletonObjects.get("beanA");
+        beanA.say();
+        BeanB beanB = (BeanB)singletonObjects.get("beanB");
+        beanB.say();
+        System.out.println(beanA==beanB.getBeanA());
     }
 
     private static final HashMap beanClassHashMap=new HashMap();
@@ -40,7 +45,7 @@ public class CustomBootstrap {
      *
      * @param cl 启动类
      */
-    public static void init(Class<?> cl) throws URISyntaxException, MalformedURLException, ClassNotFoundException {
+    public static void init(Class<?> cl) throws Exception {
         //加载扫描指定配置下文件
         CustomerComponentScan customerComponentScan = cl.getDeclaredAnnotation(CustomerComponentScan.class);
         System.out.println(customerComponentScan.value());
@@ -73,13 +78,14 @@ public class CustomBootstrap {
             System.out.println(aClass.getSimpleName());
             //spring 中有 是否可以覆盖类
             beanClassHashMap.putIfAbsent(aClass.getSimpleName(),aClass);
-
             //读取 指定配置类注解
             CustomerConfiguration customerConfiguration = aClass.getDeclaredAnnotation(CustomerConfiguration.class);
             if (Objects.nonNull(customerConfiguration)){
                 //配置文件
                 Method[] declaredMethods = aClass.getMethods();
                 for (Method method:declaredMethods){
+                    Field[] fields = aClass.getFields();
+                    Arrays.toString(fields);
                     CustomerBean customerBean = method.getDeclaredAnnotation(CustomerBean.class);
                     if (Objects.nonNull(customerBean)){
                         //配置 bean 解决循环依赖
@@ -93,8 +99,8 @@ public class CustomBootstrap {
 
     }
 
-    public static void getBean(String beanName,Method method,Class cl) {
-            addSingletonFactory("beanA");
+    public static void getBean(String beanName,Method method,Class cl) throws InstantiationException, IllegalAccessException, InvocationTargetException {
+            addSingletonFactory(beanName,method,cl);
     }
 
     public static void source() {
@@ -115,19 +121,13 @@ public class CustomBootstrap {
         beanB.say();
     }
 
-    protected static void addSingletonFactory(String beanName) {
+    protected static void addSingletonFactory(String beanName,Method method,Class cl) throws IllegalAccessException, InstantiationException, InvocationTargetException {
         synchronized (singletonObjects) {
             if (!singletonObjects.containsKey(beanName)) {
-                earlySingletonObjects.remove(beanName);
-                registeredSingletons.add(beanName);
+                Object invoke = method.invoke(cl.newInstance(), null);
+                singletonObjects.putIfAbsent(beanName,invoke);
             }
         }
     }
-
-    public Object doCreateBean(String beanName) {
-
-        return null;
-    }
-
 
 }
