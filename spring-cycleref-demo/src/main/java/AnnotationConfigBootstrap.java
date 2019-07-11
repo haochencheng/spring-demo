@@ -20,8 +20,6 @@ public class AnnotationConfigBootstrap {
         beanB.say();
         BeanB beanb = context.getBean(BeanB.class);
         System.out.println(beanB==beanb);
-        beanB.say();
-        beanB.getBeanA().say();
         context.destroy();
     }
 

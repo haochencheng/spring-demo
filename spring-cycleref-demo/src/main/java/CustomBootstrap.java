@@ -32,23 +32,19 @@ public class CustomBootstrap {
         //初始化 容器
         init(CustomBootstrap.class);
         BeanA beanA = (BeanA)singletonObjects.get("beanA");
-        beanA.say();
         BeanB beanB = (BeanB)singletonObjects.get("beanB");
-        beanB.say();
         System.out.println(beanA==beanB.getBeanA());
     }
 
     public static void init(Class<?> cl) throws Exception {
         //加载扫描指定配置下文件
         CustomerComponentScan customerComponentScan = cl.getDeclaredAnnotation(CustomerComponentScan.class);
-        System.out.println(customerComponentScan.value());
         String scan = customerComponentScan.value();
         ClassLoader classLoader = cl.getClassLoader();
         Enumeration<URL> resources;
         try {
             resources = classLoader.getResources(scan);
         } catch (IOException e) {
-            e.printStackTrace();
             throw new InvalidPathException(scan, "文件不存在");
         }
         URL url = null;
@@ -66,8 +62,6 @@ public class CustomBootstrap {
         URLClassLoader urlClassLoader=URLClassLoader.newInstance(urls, classLoader);
         for (int i = 0; i < files.length ;i++) {
             Class<?> aClass = urlClassLoader.loadClass(scan + "." + files[i].getName().split("\\.")[0]);
-            System.out.println(aClass.getName());
-            System.out.println(aClass.getSimpleName());
             //读取 指定配置类注解
             CustomerConfiguration customerConfiguration = aClass.getDeclaredAnnotation(CustomerConfiguration.class);
             if (Objects.nonNull(customerConfiguration)){
