@@ -74,8 +74,6 @@ public class CustomBootstrap {
                 //配置文件
                 Method[] declaredMethods = aClass.getMethods();
                 for (Method method:declaredMethods){
-                    Field[] fields = aClass.getFields();
-                    Arrays.toString(fields);
                     CustomerBean customerBean = method.getDeclaredAnnotation(CustomerBean.class);
                     if (Objects.nonNull(customerBean)){
                         //配置 bean 解决循环依赖 直接加载无法解决 循环依赖问题 ，加载可以成功 但是 不是一个引用
