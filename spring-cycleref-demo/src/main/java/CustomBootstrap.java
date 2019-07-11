@@ -38,13 +38,6 @@ public class CustomBootstrap {
         System.out.println(beanA==beanB.getBeanA());
     }
 
-    private static final HashMap beanClassHashMap=new HashMap();
-
-    /**
-     * 通过启动类初始化
-     *
-     * @param cl 启动类
-     */
     public static void init(Class<?> cl) throws Exception {
         //加载扫描指定配置下文件
         CustomerComponentScan customerComponentScan = cl.getDeclaredAnnotation(CustomerComponentScan.class);
@@ -63,7 +56,6 @@ public class CustomBootstrap {
             url = resources.nextElement();
             System.out.println(url.toString());
         }
-
         File file=new File(url.toURI());
         File[] files = file.listFiles();
         URL[] urls=new URL[files.length];
@@ -76,8 +68,6 @@ public class CustomBootstrap {
             Class<?> aClass = urlClassLoader.loadClass(scan + "." + files[i].getName().split("\\.")[0]);
             System.out.println(aClass.getName());
             System.out.println(aClass.getSimpleName());
-            //spring 中有 是否可以覆盖类
-            beanClassHashMap.putIfAbsent(aClass.getSimpleName(),aClass);
             //读取 指定配置类注解
             CustomerConfiguration customerConfiguration = aClass.getDeclaredAnnotation(CustomerConfiguration.class);
             if (Objects.nonNull(customerConfiguration)){
@@ -89,7 +79,7 @@ public class CustomBootstrap {
                     CustomerBean customerBean = method.getDeclaredAnnotation(CustomerBean.class);
                     if (Objects.nonNull(customerBean)){
                         //配置 bean 解决循环依赖 直接加载无法解决 循环依赖问题 ，加载可以成功 但是 不是一个引用
-//                        getBean(customerBean.name(),method,aClass);
+                        getBean(customerBean.name(),method,aClass);
                     }
                 }
             }
