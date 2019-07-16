@@ -17,7 +17,7 @@ import org.springframework.core.Ordered;
 @Configuration
 @PropertySource(value="classpath:application.properties")
 @Import(ImportPropertiesBeanDefinitionRegistrar.class)
-public class CustomerSpringConfiguration  implements BeanDefinitionRegistryPostProcessor, Ordered {
+public class PropertyBeanDefinitionRegistryPostProcessorConfig implements BeanDefinitionRegistryPostProcessor, Ordered {
 
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {

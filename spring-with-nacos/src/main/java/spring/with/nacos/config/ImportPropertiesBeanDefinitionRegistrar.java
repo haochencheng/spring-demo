@@ -29,12 +29,10 @@ public class ImportPropertiesBeanDefinitionRegistrar implements ImportBeanDefini
 
     @Override
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
-        System.out.println("bbb");
     }
 
     @Override
     public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-        System.out.println("ddd");
     }
 
     @Override
