@@ -11,7 +11,7 @@ import java.io.IOException;
  * @author: haochencheng
  * @create: 2019-07-15 09:05
  **/
-public class Bootstrap {
+public class NacosSpringBootstrap {
 
     private static final int PORT = 9939;
 
@@ -28,7 +28,7 @@ public class Bootstrap {
         tomcat.setHostname(hostName);
         Context context = tomcat.addWebapp(tomcat.getHost(), contextPath, contextDocBase);
 
-        ClassLoader classLoader = Bootstrap.class.getClassLoader();
+        ClassLoader classLoader = NacosSpringBootstrap.class.getClassLoader();
         context.setParentClassLoader(classLoader);
 
         tomcat.start();

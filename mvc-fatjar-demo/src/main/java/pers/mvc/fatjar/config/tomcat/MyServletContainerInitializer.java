@@ -27,7 +27,6 @@ public class MyServletContainerInitializer implements ServletContainerInitialize
         List<MyWebApplicationInitializer> initializers = new LinkedList<>();
         if (Objects.nonNull(webAppInitializerClasses)){
             //实例化 web应用程序 初始化类
-            System.out.printf("%s---->>>%s,servletContextName=%s",this.getClass().getSimpleName(),Arrays.toString(webAppInitializerClasses.toArray()),ctx);
             for (Class<?> waiClass : webAppInitializerClasses) {
                 try {
                     initializers.add((MyWebApplicationInitializer)waiClass.newInstance());
