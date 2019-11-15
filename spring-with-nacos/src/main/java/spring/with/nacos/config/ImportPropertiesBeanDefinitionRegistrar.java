@@ -15,6 +15,7 @@ import org.springframework.core.io.support.ResourcePropertySource;
 import org.springframework.core.type.AnnotationMetadata;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -49,7 +50,7 @@ public class ImportPropertiesBeanDefinitionRegistrar implements ImportBeanDefini
                     logger.warn(propertyName+" not found", e);
                 }
             }
-            System.out.println(activeProfiles);
+            System.out.println(Arrays.toString(activeProfiles));
         }
     }
 }
